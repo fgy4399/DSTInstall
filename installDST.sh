@@ -8,9 +8,16 @@ Tip="${Green_font_prefix}[注意]${Font_color_suffix}"
 npmInstall(){
 	echo "${release}"
 	if [[ "${release}" == "centos" ]];then
-		yum -y install glibc.i686 libstdc++.i686 libcurl4-gnutls-dev.i686 libcurl.i686
+ 		yum update -y
+   		yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm -y
+     		yum install glibc.i686 libstdc++.i686 libcurl.i686 screen -y
+		sleep 5
 	elif [[ "${release}" == "ubuntu" ]];then
-		sudo apt-get -y install libstdc++6:i386 libgcc1:i386 libcurl4-gnutls-dev:i386 lib32gcc1
+		sudo add-apt-repository multiverse
+  		sudo dpkg --add-architecture i386
+    		sudo apt update -y
+      		sudo apt install lib32gcc1 libcurl4-gnutls-dev:i386 lib32stdc++6 lib32z1 -y
+		sleep 5
 	else
 		echo -e "${Error} 安装系统环境出错!!!" && exit 1
 	fi
@@ -28,7 +35,7 @@ installSteamCMD(){
 
 ####安装饥荒服务端
 installDSTServer(){
-	bash $HOME/steamcmd/steamcmd.sh +login anonymous +force_install_dir ../dontstarvetogether_dedicated_server +app_update 343050 validate +quit
+	bash $HOME/steamcmd/steamcmd.sh +force_install_dir ../dontstarvetogether_dedicated_server +login anonymous +app_update 343050 validate +quit
 	if [[ "${release}" == "centos" ]];then
 		cd $HOME/dontstarvetogether_dedicated_server/bin/lib32
 		ln -s /usr/lib/libcurl.so.4 libcurl-gnutls.so.4
