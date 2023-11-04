@@ -496,7 +496,7 @@ check_version
 if [[ $# -eq 1 ]]; then
   case "$1" in
     "npmInstall")
-  	 npmInstall
+      npmInstall
       ;;
     "installSteamCMD")
       installSteamCMD
