@@ -58,7 +58,7 @@ updateDSTServer(){
 }
 
 ###启动地上世界
-stratMaster(){
+startMaster(){
 	steamcmd_dir="$HOME/steamcmd"
 	install_dir="$HOME/dontstarvetogether_dedicated_server"
 	cluster_name="World1"
@@ -100,7 +100,7 @@ stratMaster(){
 }
 
 ###启动洞穴世界
-stratCaves(){
+startCaves(){
 	steamcmd_dir="$HOME/steamcmd"
 	install_dir="$HOME/dontstarvetogether_dedicated_server"
 	cluster_name="World1"
@@ -468,10 +468,10 @@ case "$num" in
 	updateDSTServer
 	;;	
 	3)
-	stratMaster
+	startMaster
 	;;
 	4)
-	stratCaves
+	startCaves
 	;;
 	5)
 	initFileMaster
@@ -491,4 +491,33 @@ esac
 check_sys
 check_version
 [[ ${release} != "ubuntu" ]] && [[ ${release} != "centos" ]] && echo -e "本脚本不支持当前系统 ${release} !" && exit 1
-start_menu
+
+# 判断命令行参数
+if [[ $# -eq 1 ]]; then
+  case "$1" in
+    "npmInstall")
+  	 npmInstall
+      ;;
+    "installSteamCMD")
+      installSteamCMD
+      ;;
+    "installDSTServer")
+      installDSTServer
+      ;;
+    "updateDSTServer")
+      updateDSTServer
+      ;;
+    "startMaster")
+      startMaster
+      ;;
+    "startCaves")
+      startCaves
+      ;;
+    *)
+      echo "无效的命令行参数"
+      exit 1
+      ;;
+  esac
+else
+  start_menu
+fi
